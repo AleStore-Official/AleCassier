@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamento POS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>🏦 AleBank</h1>
+    <button class="btn-admin" onclick="location.href='carrello.html'">⬅️ Torna al Carrello</button>
+  </header>
+
+  <main style="text-align: center; padding: 40px;">
+    <h2>💶 Totale da pagare</h2>
+    <p id="totaleFinale" class="totale">€0.00</p>
+
+    <h2 style="margin-top: 30px;">💳 Importo pagato dal cliente</h2>
+    <input type="number" class="input" id="importoCliente" placeholder="Es. 10.00" oninput="calcolaResto()">
+    
+    <p id="messaggio" class="conferma-msg" style="margin-top: 20px;">Inserisci l'importo per calcolare il resto.</p>
+
+    <button class="btn-next" style="margin-top: 30px;" onclick="confermaPagamento()">✅ Resto dato</button>
+  </main>
+
+  <script>
+    let totale = parseFloat(localStorage.getItem("totaleFinale")) || 0;
+
+    document.getElementById("totaleFinale").textContent = `€${totale.toFixed(2)}`;
+
+    function calcolaResto() {
+      const pagato = parseFloat(document.getElementById("importoCliente").value);
+      const messaggio = document.getElementById("messaggio");
+
+      if (isNaN(pagato)) {
+        messaggio.textContent = "❌ Inserisci un importo valido.";
+        return;
+      }
+
+      const differenza = pagato - totale;
+
+      if (differenza < 0) {
+        messaggio.textContent = `⚠️ Mancano ancora €${Math.abs(differenza).toFixed(2)}.`;
+      } else if (differenza === 0) {
+        messaggio.textContent = `✅ Pagamento esatto. Nessun resto.`;
+      } else {
+        messaggio.textContent = `💰 Resto da dare: €${differenza.toFixed(2)}.`;
+      }
+    }
+
+    function confermaPagamento() {
+      window.location.href = "fattura.html";
+    }
+  </script>
+</body>
+</html>

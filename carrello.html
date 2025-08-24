@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrello</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>🛒 Il Tuo Carrello</h1>
+    <button class="btn-admin" onclick="location.href='index.html'">⬅️ Torna</button>
+  </header>
+
+  <main class="main-layout">
+    <section id="carrelloList" class="product-grid">
+      <!-- I prodotti vengono inseriti via JS -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="borse-container">
+      🛍️ Borse: <span id="borseVisual">0</span><br>
+      💸 Costo: €<span id="costoBorse">0.00</span>
+    </div>
+    <div class="totale" id="totale">Totale: €0.00</div>
+    <button class="btn-next" onclick="location.href='pagamento.html'">💳 Paga Ora</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

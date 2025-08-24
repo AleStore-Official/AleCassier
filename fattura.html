@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Fattura</title>
+  <link rel="stylesheet" href="style.css">
+  <meta http-equiv="refresh" content="20; url=index.html">
+</head>
+<body>
+  <header class="header">
+    <h1>🧾 Fattura</h1>
+  </header>
+
+  <main style="text-align: center; padding: 30px;">
+    <div class="product-card">
+      <h2>✅ Pagamento Completato</h2>
+      <p>Grazie per il tuo acquisto!</p>
+      <hr style="margin: 20px 0;">
+
+      <p><strong>Prodotti acquistati:</strong></p>
+      <div id="riepilogoFattura" style="margin-bottom: 20px;"></div>
+
+      <p><strong>Totale finale:</strong> €<span id="totaleFattura">0.00</span></p>
+      <p><em>Verrai reindirizzato alla pagina iniziale tra 20 secondi...</em></p>
+    </div>
+  </main>
+
+  <script>
+    // Mostra riepilogo carrello
+    const container = document.getElementById("riepilogoFattura");
+    const carrello = JSON.parse(localStorage.getItem("carrello")) || [];
+
+    carrello.forEach(item => {
+      const riga = document.createElement("p");
+      riga.textContent = `${item.nome} × ${item.quantità} = €${(item.prezzo * item.quantità).toFixed(2)}`;
+      container.appendChild(riga);
+    });
+
+    document.getElementById("totaleFattura").textContent =
+      localStorage.getItem("totaleFinale") || "0.00";
+
+    // Reindirizzamento fallback JS (oltre a meta tag)
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 20000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Registratore di Cassa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>🧾 Registratore di Cassa</h1>
+  </header>
+
+  <main class="main-layout">
+    <section class="product-grid">
+      <!-- 🥪 Panini & Piatti -->
+      <h2>🥪 Panini & Piatti</h2>
+      <div class="product-card"><h3>Panino</h3><p>€3.50</p><button class="btn-add" onclick="aggiungiProdotto('Panino', 3.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Brioche</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Brioche', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Lasagne</h3><p>€4.50</p><button class="btn-add" onclick="aggiungiProdotto('Lasagne', 4.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Muffin al cioccolato</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Muffin al cioccolato', 2.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Waffle</h3><p>€2.50</p><button class="btn-add" onclick="aggiungiProdotto('Waffle', 2.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Waffle a forma di cuore</h3><p>€2.80</p><button class="btn-add" onclick="aggiungiProdotto('Waffle a forma di cuore', 2.80)">Aggiungi</button></div>
+      <div class="product-card"><h3>Una fetta di pizza</h3><p>€2.50</p><button class="btn-add" onclick="aggiungiProdotto('Una fetta di pizza', 2.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Crostata all'albicocca</h3><p>€2.20</p><button class="btn-add" onclick="aggiungiProdotto('Crostata all\'albicocca', 2.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Crostata al cioccolato</h3><p>€2.50</p><button class="btn-add" onclick="aggiungiProdotto('Crostata al cioccolato', 2.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Ciambella</h3><p>€1.80</p><button class="btn-add" onclick="aggiungiProdotto('Ciambella', 1.80)">Aggiungi</button></div>
+
+      <!-- 🍞 Pane & Snack -->
+      <h2>🍞 Pane & Snack</h2>
+      <div class="product-card"><h3>Pane</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Pane', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Pane per hamburger</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Pane per hamburger', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Fette biscottate</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Fette biscottate', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Fetta biscottata con miele</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Fetta biscottata con miele', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cracker</h3><p>€0.80</p><button class="btn-add" onclick="aggiungiProdotto('Cracker', 0.80)">Aggiungi</button></div>
+      <div class="product-card"><h3>Patatine fritte</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Patatine fritte', 2.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Wurstel</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Wurstel', 1.50)">Aggiungi</button></div>
+
+      <!-- 🍓 Frutta & Verdura -->
+      <h2>🍓 Frutta & Verdura</h2>
+      <div class="product-card"><h3>Mela</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Mela', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Mela rossa</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Mela rossa', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Pera</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Pera', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Banana</h3><p>€0.90</p><button class="btn-add" onclick="aggiungiProdotto('Banana', 0.90)">Aggiungi</button></div>
+      <div class="product-card"><h3>Fragola</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Fragola', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Uva Viola</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Uva Viola', 2.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Uva verde</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Uva verde', 2.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Mandarino</h3><p>€0.80</p><button class="btn-add" onclick="aggiungiProdotto('Mandarino', 0.80)">Aggiungi</button></div>
+      <div class="product-card"><h3>Limone</h3><p>€0.60</p><button class="btn-add" onclick="aggiungiProdotto('Limone', 0.60)">Aggiungi</button></div>
+      <div class="product-card"><h3>Arancia</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Arancia', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Arancia rossa</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Arancia rossa', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Pomodoro piccolo</h3><p>€0.70</p><button class="btn-add" onclick="aggiungiProdotto('Pomodoro piccolo', 0.70)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cetriolo grande</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Cetriolo grande', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cetriolo piccolo</h3><p>€0.80</p><button class="btn-add" onclick="aggiungiProdotto('Cetriolo piccolo', 0.80)">Aggiungi</button></div>
+      <div class="product-card"><h3>Peperone Verde</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Peperone Verde', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Peperone rosso</h3><p>€1.30</p><button class="btn-add" onclick="aggiungiProdotto('Peperone rosso', 1.30)">Aggiungi</button></div>
+      <div class="product-card"><h3>Peperone giallo</h3><p>€1.30</p><button class="btn-add" onclick="aggiungiProdotto('Peperone giallo', 1.30)">Aggiungi</button></div>
+      <div class="product-card"><h3>Carota</h3><p>€0.60</p><button class="btn-add" onclick="aggiungiProdotto('Carota', 0.60)">Aggiungi</button></div>
+      <div class="product-card"><h3>Patata</h3><p>€0.50</p><button class="btn-add" onclick="aggiungiProdotto('Patata', 0.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Pannocchia</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Pannocchia', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Insalata</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Insalata', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Melanzana</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Melanzana', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Finocchio</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Finocchio', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Fettina di peperone</h3><p>€0.40</p><button class="btn-add" onclick="aggiungiProdotto('Fettina di peperone', 0.40)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cavolfiore</h3><p>€1.80</p><button class="btn-add" onclick="aggiungiProdotto('Cavolfiore', 1.80)">Aggiungi</button></div>
+      <div class="product-card"><h3>Asparagi</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Asparagi', 2.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Pisellini</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Pisellini', 1.50)">Aggiungi</button></div>
+
+      <!-- 🍦 Dolci & Gelati -->
+      <h2>🍦 Dolci & Gelati</h2>
+      <div class="product-card"><h3>Gelato con cono</h3><p>€2.50</p><button class="btn-add" onclick="aggiungiProdotto('Gelato con cono', 2.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cono di gelato</h3><p>€2.00</p><button class="btn-add" onclick="aggiungiProdotto('Cono di gelato', 2.00)">Aggiungi</button></div>
+
+      <!-- 🥚 Uova & Proteine -->
+      <h2>🥚 Uova & Proteine</h2>
+      <div class="product-card"><h3>Uova crude</h3><p>€1.00</p><button class="btn-add" onclick="aggiungiProdotto('Uova crude', 1.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Uova sode</h3><p>€1.20</p><button class="btn-add" onclick="aggiungiProdotto('Uova sode', 1.20)">Aggiungi</button></div>
+      <div class="product-card"><h3>Gamberetto</h3><p>€3.50</p><button class="btn-add" onclick="aggiungiProdotto('Gamberetto', 3.50)">Aggiungi</button></div>
+
+      <!-- 🍉 Speciali -->
+      <h2>🍉 Speciali</h2>
+      <div class="product-card"><h3>Una fetta di anguria</h3><p>€1.50</p><button class="btn-add" onclick="aggiungiProdotto('Una fetta di anguria', 1.50)">Aggiungi</button></div>
+      <div class="product-card"><h3>Anguria intera</h3><p>€4.00</p><button class="btn-add" onclick="aggiungiProdotto('Anguria intera', 4.00)">Aggiungi</button></div>
+      <div class="product-card"><h3>Cipolla</h3><p>€0.70</p><button class="btn-add" onclick="aggiungiProdotto('Cipolla', 0.70)">Aggiungi</button></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="borse-container">
+      🛍️ Borse: <input type="number" id="borse" min="0" value="0" oninput="aggiornaBorse()">
+    </div>
+    <div id="totale" class="totale">Totale: €0.00</div>
+    <button class="btn-next" onclick="location.href='carrello.html'">➡️ Avanti</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
