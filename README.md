@@ -84,7 +84,8 @@ Se ti piace smanettare o sei curioso di vedere come si sviluppa, seguimi pure!
 Grazie per aver visitato il mio repository.  
 Spero che tu possa trovare qualcosa di utile, interessante o semplicemente divertente.  
 E se vuoi usare qualcosa, fallo pure con rispetto e spirito open source.
+
 ---
 
-**License:** GNU Affero General Public License v3.0  
+**License**: GNU Affero General Public License v3.0  
 © AleStore Official — All rights reserved under AGPL terms.
