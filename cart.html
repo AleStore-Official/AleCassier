@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>🛒 Your Cart</h1>
+    <button class="btn-admin" onclick="location.href='index.html'">⬅️ Back</button>
+  </header>
+
+  <main class="main-layout">
+    <section id="carrelloList" class="product-grid">
+      <!-- Products are inserted via JS -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="borse-container">
+      🛍️ Bags: <span id="borseVisual">0</span><br>
+      💸 Cost: €<span id="costoBorse">0.00</span>
+    </div>
+    <div class="totale" id="totale">Total: €0.00</div>
+    <button class="btn-next" onclick="location.href='pagamento.html'">💳 Pay Now</button>
+  </footer>
+
+  <div class="signature">
+    <p style="text-align: center; margin-top: 20px;">Created by <strong>AleStore-Official</strong></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
