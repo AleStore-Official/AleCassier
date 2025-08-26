@@ -1,32 +1,36 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fattura</title>
+  <title>Invoice</title>
   <link rel="stylesheet" href="style.css">
   <meta http-equiv="refresh" content="20; url=index.html">
 </head>
 <body>
   <header class="header">
-    <h1>🧾 Fattura</h1>
+    <h1>🧾 Invoice</h1>
   </header>
 
   <main style="text-align: center; padding: 30px;">
     <div class="product-card">
-      <h2>✅ Pagamento Completato</h2>
-      <p>Grazie per il tuo acquisto!</p>
+      <h2>✅ Payment Completed</h2>
+      <p>Thank you for your purchase!</p>
       <hr style="margin: 20px 0;">
 
-      <p><strong>Prodotti acquistati:</strong></p>
+      <p><strong>Purchased Products:</strong></p>
       <div id="riepilogoFattura" style="margin-bottom: 20px;"></div>
 
-      <p><strong>Totale finale:</strong> €<span id="totaleFattura">0.00</span></p>
-      <p><em>Verrai reindirizzato alla pagina iniziale tra 20 secondi...</em></p>
+      <p><strong>Final Total:</strong> €<span id="totaleFattura">0.00</span></p>
+      <p><em>You will be redirected to the homepage in 20 seconds...</em></p>
     </div>
   </main>
 
+  <div class="signature">
+    <p style="text-align: center; margin-top: 40px;">Created by <strong>AleStore-Official</strong></p>
+  </div>
+
   <script>
-    // Mostra riepilogo carrello
+    // Display cart summary
     const container = document.getElementById("riepilogoFattura");
     const carrello = JSON.parse(localStorage.getItem("carrello")) || [];
 
@@ -39,7 +43,7 @@
     document.getElementById("totaleFattura").textContent =
       localStorage.getItem("totaleFinale") || "0.00";
 
-    // Reindirizzamento fallback JS (oltre a meta tag)
+    // Fallback redirect via JS (in addition to meta tag)
     setTimeout(() => {
       window.location.href = "index.html";
     }, 20000);
