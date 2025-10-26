@@ -1,205 +1,146 @@
-let carrello = [];
+let cart = [];
 
-function aggiungiProdotto(nome, prezzo) {
-  const esistente = carrello.find(p => p.nome === nome);
-  if (esistente) {
-    esistente.quantità += 1;
+function addProduct(name, price) {
+  const existing = cart.find(p => p.name === name);
+  if (existing) {
+    existing.quantity += 1;
   } else {
-    carrello.push({ nome, prezzo, quantità: 1 });
+    cart.push({ name, price, quantity: 1 });
   }
-  aggiornaTotale();
-  salvaCarrello();
+  updateTotal();
+  saveCart();
 }
 
-function aggiornaBorse() {
-  const nBorse = parseInt(document.getElementById('borse')?.value) || 0;
-  const borse = carrello.find(p => p.nome === "Borsa");
+function updateBags() {
+  const nBags = parseInt(document.getElementById('bags')?.value) || 0;
+  const bags = cart.find(p => p.name === "Bag");
 
-  if (borse) {
-    borse.quantità = nBorse;
-  } else if (nBorse > 0) {
-    carrello.push({ nome: "Borsa", prezzo: 0.20, quantità: nBorse });
+  if (bags) {
+    bags.quantity = nBags;
+  } else if (nBags > 0) {
+    cart.push({ name: "Bag", price: 0.20, quantity: nBags });
   }
 
-  aggiornaTotale();
-  salvaCarrello();
+  updateTotal();
+  saveCart();
 }
 
-function rimuoviProdotto(nome) {
-  carrello = carrello.filter(item => item.nome !== nome);
-  aggiornaTotale();
-  salvaCarrello();
-  mostraCarrello();
+function removeProduct(name) {
+  cart = cart.filter(item => item.name !== name);
+  updateTotal();
+  saveCart();
+  showCart();
 }
 
-function calcolaTotale() {
-  return carrello.reduce((sum, item) => sum + item.prezzo * item.quantità, 0);
+function calculateTotal() {
+  return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
-function aggiornaTotale() {
-  const totale = calcolaTotale();
-  const totaleDiv = document.getElementById('totale');
-  if (totaleDiv) totaleDiv.textContent = `Totale: €${totale.toFixed(2)}`;
-  localStorage.setItem('totaleFinale', totale.toFixed(2));
+function updateTotal() {
+  const total = calculateTotal();
+  const totalDiv = document.getElementById('totale');
+  if (totalDiv) totalDiv.textContent = `Total: €${total.toFixed(2)}`;
+  localStorage.setItem('finalTotal', total.toFixed(2));
 }
 
-function salvaCarrello() {
-  localStorage.setItem("carrello", JSON.stringify(carrello));
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-function caricaCarrello() {
-  const salvato = localStorage.getItem("carrello");
-  if (salvato) {
-    carrello = JSON.parse(salvato);
-    aggiornaTotale();
-    mostraCarrello();
+function loadCart() {
+  const saved = localStorage.getItem("cart");
+  if (saved) {
+    cart = JSON.parse(saved);
+    updateTotal();
+    showCart();
   }
 }
 
-function mostraCarrello() {
+function showCart() {
   const container = document.getElementById("carrelloList");
   if (!container) return;
 
   container.innerHTML = "";
-  carrello.forEach(item => {
-    const riga = document.createElement("div");
-    riga.className = "product-card";
-    riga.innerHTML = `
+  cart.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "product-card";
+    row.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <strong>${item.nome}</strong><br>
-          Quantità: ${item.quantità}<br>
-          €${(item.prezzo * item.quantità).toFixed(2)}
+          <strong>${item.name}</strong><br>
+          Quantity: ${item.quantity}<br>
+          €${(item.price * item.quantity).toFixed(2)}
         </div>
-        <button class="btn-add" onclick="rimuoviProdotto('${item.nome}')">❌</button>
+        <button class="btn-add" onclick="removeProduct('${item.name}')">❌</button>
       </div>
     `;
-    container.appendChild(riga);
+    container.appendChild(row);
   });
 
-  const borse = carrello.find(p => p.nome === "Borsa");
-  document.getElementById("borseVisual").textContent = borse ? borse.quantità : 0;
-  document.getElementById("costoBorse").textContent = borse ? (borse.prezzo * borse.quantità).toFixed(2) : "0.00";
-  document.getElementById("totaleFinale").textContent = localStorage.getItem("totaleFinale") || "0.00";
+  const bags = cart.find(p => p.name === "Bag");
+  document.getElementById("borseVisual").textContent = bags ? bags.quantity : 0;
+  document.getElementById("costoBorse").textContent = bags ? (bags.price * bags.quantity).toFixed(2) : "0.00";
+  document.getElementById("totale").textContent = `Total: €${calculateTotal().toFixed(2)}`;
 }
 
-// 🧾 Simulazione POS: verifica codice e mostra ricevuta
-function verificaCodice() {
-  const codice = document.getElementById("codicePagamento").value.trim();
-  const codiceValido = "POS2025";
-
-  if (codice === codiceValido) {
-    document.getElementById("messaggio").textContent = "✅ Codice accettato. Generazione ricevuta...";
-    mostraRicevuta();
-
-    // ⏳ Reindirizza dopo 5 secondi
-    setTimeout(() => {
-      window.location.href = "fattura.html";
-    }, 5000);
-  } else {
-    document.getElementById("messaggio").textContent = "❌ Codice non valido.";
-    document.getElementById("ricevuta").style.display = "none";
+document.addEventListener("DOMContentLoaded", () => {
+  if (location.pathname.includes("cart.html")) {
+    loadCart();
   }
-}
+});
 
-function mostraRicevuta() {
-  const container = document.getElementById("riepilogoProdotti");
-  const ricevuta = document.getElementById("ricevuta");
-  const carrello = JSON.parse(localStorage.getItem("carrello")) || [];
-
-  container.innerHTML = "";
-  carrello.forEach(item => {
-    const riga = document.createElement("p");
-    riga.textContent = `${item.nome} × ${item.quantità} = €${(item.prezzo * item.quantità).toFixed(2)}`;
-    container.appendChild(riga);
-  });
-
-  document.getElementById("totaleFinale").textContent =
-    localStorage.getItem("totaleFinale") || "0.00";
-
-  ricevuta.style.display = "block";
-}
-
-// 📷 Lettore QR
-window.onload = () => {
-  if (location.pathname.includes("carrello.html")) {
-    caricaCarrello();
-    return;
-  }
-
-  const scanner = new Html5Qrcode("qr-preview");
-
-  scanner.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      const nome = decodedText.trim();
-      const prezzo = prodotti[nome];
-      if (prezzo !== undefined) {
-        aggiungiProdotto(nome, prezzo);
-        mostraCarrello();
-      } else {
-        console.warn(`QR non riconosciuto: ${nome}`);
-      }
-    },
-    (errorMessage) => {
-      // Ignora errori di scansione
-    }
-  );
-};
-
-// 📦 Lista prodotti e prezzi
-const prodotti = {
-  "Panino": 3.50,
-  "Brioche": 1.50,
-  "Lasagne": 4.50,
-  "Muffin al cioccolato": 2.00,
+// 📦 Product list
+const products = {
+  "Sandwich": 3.50,
+  "Croissant": 1.50,
+  "Lasagna": 4.50,
+  "Chocolate Muffin": 2.00,
   "Waffle": 2.50,
-  "Waffle a forma di cuore": 2.80,
-  "Una fetta di pizza": 2.50,
-  "Crostata all'albicocca": 2.20,
-  "Crostata al cioccolato": 2.50,
-  "Ciambella": 1.80,
-  "Pane": 1.50,
-  "Pane per hamburger": 1.20,
-  "Fette biscottate": 1.00,
-  "Fetta biscottata con miele": 1.50,
-  "Cracker": 0.80,
-  "Patatine fritte": 2.00,
-  "Wurstel": 1.50,
-  "Mela": 1.00,
-  "Mela rossa": 1.00,
-  "Pera": 1.20,
+  "Heart-shaped Waffle": 2.80,
+  "Slice of Pizza": 2.50,
+  "Apricot Tart": 2.20,
+  "Chocolate Tart": 2.50,
+  "Donut": 1.80,
+  "Bread": 1.50,
+  "Burger Bun": 1.20,
+  "Toast": 1.00,
+  "Toast with Honey": 1.50,
+  "Crackers": 0.80,
+  "French Fries": 2.00,
+  "Sausage": 1.50,
+  "Apple": 1.00,
+  "Red Apple": 1.00,
+  "Pear": 1.20,
   "Banana": 0.90,
-  "Fragola": 1.50,
-  "Uva Viola": 2.00,
-  "Uva verde": 2.00,
-  "Mandarino": 0.80,
-  "Limone": 0.60,
-  "Arancia": 1.00,
-  "Arancia rossa": 1.20,
-  "Pomodoro piccolo": 0.70,
-  "Cetriolo grande": 1.00,
-  "Cetriolo piccolo": 0.80,
-  "Peperone Verde": 1.20,
-  "Peperone rosso": 1.30,
-  "Peperone giallo": 1.30,
-  "Carota": 0.60,
-  "Patata": 0.50,
-  "Pannocchia": 1.50,
-  "Insalata": 1.00,
-  "Melanzana": 1.20,
-  "Finocchio": 1.00,
-  "Fettina di peperone": 0.40,
-  "Cavolfiore": 1.80,
-  "Asparagi": 2.00,
-  "Pisellini": 1.50,
-  "Gelato con cono": 2.50,
-  "Cono di gelato": 2.00,
-  "Uova crude": 1.00,
-  "Uova sode": 1.20,
-  "Gamberetto": 3.50,
-  "Una fetta di anguria": 1.50,
-  "Anguria intera": 4.00,
-  "Cipolla": 0.70
+  "Strawberry": 1.50,
+  "Purple Grapes": 2.00,
+  "Green Grapes": 2.00,
+  "Mandarin": 0.80,
+  "Lemon": 0.60,
+  "Orange": 1.00,
+  "Blood Orange": 1.20,
+  "Small Tomato": 0.70,
+  "Large Cucumber": 1.00,
+  "Small Cucumber": 0.80,
+  "Green Pepper": 1.20,
+  "Red Pepper": 1.30,
+  "Yellow Pepper": 1.30,
+  "Carrot": 0.60,
+  "Potato": 0.50,
+  "Corn Cob": 1.50,
+  "Lettuce": 1.00,
+  "Eggplant": 1.20,
+  "Fennel": 1.00,
+  "Pepper Slice": 0.40,
+  "Cauliflower": 1.80,
+  "Asparagus": 2.00,
+  "Peas": 1.50,
+  "Ice Cream Cone": 2.50,
+  "Cone Ice Cream": 2.00,
+  "Raw Eggs": 1.00,
+  "Boiled Eggs": 1.20,
+  "Shrimp": 3.50,
+  "Watermelon Slice": 1.50,
+  "Whole Watermelon": 4.00,
+  "Onion": 0.70
 };
