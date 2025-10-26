@@ -13,14 +13,14 @@
 
   <main style="text-align: center; padding: 40px;">
     <h2>💶 Total to Pay</h2>
-    <p id="totaleFinale" class="totale">€0.00</p>
+    <p id="totalDisplay" class="totale">€0.00</p>
 
     <h2 style="margin-top: 30px;">💳 Amount Paid by Customer</h2>
-    <input type="number" class="input" id="importoCliente" placeholder="e.g. 10.00" oninput="calcolaResto()">
+    <input type="number" class="input" id="customerAmount" placeholder="e.g. 10.00" oninput="calculateChange()">
     
-    <p id="messaggio" class="conferma-msg" style="margin-top: 20px;">Enter the amount to calculate the change.</p>
+    <p id="message" class="conferma-msg" style="margin-top: 20px;">Enter the amount to calculate the change.</p>
 
-    <button class="btn-next" style="margin-top: 30px;" onclick="confermaPagamento()">✅ Confirm Change</button>
+    <button class="btn-next" style="margin-top: 30px;" onclick="confirmPayment()">✅ Confirm Change</button>
   </main>
 
   <div class="signature">
@@ -28,31 +28,30 @@
   </div>
 
   <script>
-    let totale = parseFloat(localStorage.getItem("totaleFinale")) || 0;
+    let total = parseFloat(localStorage.getItem("finalTotal")) || 0;
+    document.getElementById("totalDisplay").textContent = `€${total.toFixed(2)}`;
 
-    document.getElementById("totaleFinale").textContent = `€${totale.toFixed(2)}`;
+    function calculateChange() {
+      const paid = parseFloat(document.getElementById("customerAmount").value);
+      const message = document.getElementById("message");
 
-    function calcolaResto() {
-      const pagato = parseFloat(document.getElementById("importoCliente").value);
-      const messaggio = document.getElementById("messaggio");
-
-      if (isNaN(pagato)) {
-        messaggio.textContent = "❌ Please enter a valid amount.";
+      if (isNaN(paid)) {
+        message.textContent = "❌ Please enter a valid amount.";
         return;
       }
 
-      const differenza = pagato - totale;
+      const difference = paid - total;
 
-      if (differenza < 0) {
-        messaggio.textContent = `⚠️ Still missing €${Math.abs(differenza).toFixed(2)}.`;
-      } else if (differenza === 0) {
-        messaggio.textContent = `✅ Exact payment. No change needed.`;
+      if (difference < 0) {
+        message.textContent = `⚠️ Still missing €${Math.abs(difference).toFixed(2)}.`;
+      } else if (difference === 0) {
+        message.textContent = `✅ Exact payment. No change needed.`;
       } else {
-        messaggio.textContent = `💰 Change to give: €${differenza.toFixed(2)}.`;
+        message.textContent = `💰 Change to give: €${difference.toFixed(2)}.`;
       }
     }
 
-    function confermaPagamento() {
+    function confirmPayment() {
       window.location.href = "invoice.html";
     }
   </script>
