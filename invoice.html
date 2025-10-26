@@ -18,9 +18,9 @@
       <hr style="margin: 20px 0;">
 
       <p><strong>Purchased Products:</strong></p>
-      <div id="riepilogoFattura" style="margin-bottom: 20px;"></div>
+      <div id="invoiceSummary" style="margin-bottom: 20px;"></div>
 
-      <p><strong>Final Total:</strong> €<span id="totaleFattura">0.00</span></p>
+      <p><strong>Final Total:</strong> €<span id="invoiceTotal">0.00</span></p>
       <p><em>You will be redirected to the homepage in 20 seconds...</em></p>
     </div>
   </main>
@@ -30,20 +30,18 @@
   </div>
 
   <script>
-    // Display cart summary
-    const container = document.getElementById("riepilogoFattura");
-    const carrello = JSON.parse(localStorage.getItem("carrello")) || [];
+    const container = document.getElementById("invoiceSummary");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    carrello.forEach(item => {
-      const riga = document.createElement("p");
-      riga.textContent = `${item.nome} × ${item.quantità} = €${(item.prezzo * item.quantità).toFixed(2)}`;
-      container.appendChild(riga);
+    cart.forEach(item => {
+      const line = document.createElement("p");
+      line.textContent = `${item.name} × ${item.quantity} = €${(item.price * item.quantity).toFixed(2)}`;
+      container.appendChild(line);
     });
 
-    document.getElementById("totaleFattura").textContent =
-      localStorage.getItem("totaleFinale") || "0.00";
+    document.getElementById("invoiceTotal").textContent =
+      localStorage.getItem("finalTotal") || "0.00";
 
-    // Fallback redirect via JS (in addition to meta tag)
     setTimeout(() => {
       window.location.href = "index.html";
     }, 20000);
