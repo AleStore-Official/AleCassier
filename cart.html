@@ -14,7 +14,6 @@
 
   <main class="main-layout">
     <section id="carrelloList" class="product-grid">
-      <!-- Products are inserted via JS -->
     </section>
   </main>
 
@@ -32,6 +31,10 @@
   </div>
 
   <script src="script.js"></script>
+  <script type="module">
+    import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
+    blockIfUnauthorized();
+  </script>
   <script src="https://alestore-official.github.io/AleCAPTCHA/control.js"></script>
 </body>
 </html>
