@@ -3,9 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Cash Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E8GTDXF01V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E8GTDXF01V', {
+      page_title: 'AleCassier',
+      page_path: '/AleCassier'
+    });
+  </script>
+  <style>
+    body {
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    body.dark {
+      background: #121212;
+      color: #f0f0f0;
+    }
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .welcome {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
 </head>
 <body>
+  <button id="themeToggle" title="Toggle theme">🌙</button>
+  <div class="welcome" id="welcome">Welcome</div>
+
   <header class="header">
     <h1>🧾 Cash Register</h1>
   </header>
@@ -34,6 +73,11 @@
       <div class="product-card"><h3>Wurstel</h3><p>€1.50</p><button class="btn-add" onclick="addProduct('Wurstel', 1.50)">Add</button></div>
 
       <h2>🍓 Fruits & Vegetables</h2>
+      <div class="product-card"><h3>Apple</h3><p>€0.90</p><button class="btn-add" onclick="addProduct('Apple', 0.90)">Add</button></div>
+      <div class="product-card"><h3>Banana</h3><p>€1.00</p><button class="btn-add" onclick="addProduct('Banana', 1.00)">Add</button></div>
+      <div class="product-card"><h3>Carrot</h3><p>€0.70</p><button class="btn-add" onclick="addProduct('Carrot', 0.70)">Add</button></div>
+      <div class="product-card"><h3>Tomato</h3><p>€0.80</p><button class="btn-add" onclick="addProduct('Tomato', 0.80)">Add</button></div>
+      <div class="product-card"><h3>Lettuce</h3><p>€1.20</p><button class="btn-add" onclick="addProduct('Lettuce', 1.20)">Add</button></div>
 
       <h2>🍦 Sweets & Ice Cream</h2>
       <div class="product-card"><h3>Ice Cream with Cone</h3><p>€2.50</p><button class="btn-add" onclick="addProduct('Ice Cream with Cone', 2.50)">Add</button></div>
@@ -63,7 +107,43 @@
   <script src="script.js"></script>
   <script type="module">
     import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
     blockIfUnauthorized();
+
+    const supabase = createClient(
+      'https://hsyyrcbibohwvbuwxwok.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzeXlyY2JpYm9od3ZidXd4d29rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNjE0MDcsImV4cCI6MjA3NjYzNzQwN30.2KsFsGYjwf_cA7Z9oglVthiaE1_jWYuQ6HMMm5UXsyo'
+    );
+
+    const welcome = document.getElementById("welcome");
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      location.href = "https://alestore-official.github.io/AleLogin";
+    } else {
+      const { data: profile } = await supabase
+        .from("utenti")
+        .select("firstName,lastName")
+        .eq("email", user.email)
+        .single();
+      welcome.textContent = `Welcome ${profile?.firstName || ''} ${profile?.lastName || ''}`;
+    }
+  </script>
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    const currentTheme = localStorage.getItem("alecassier-theme");
+    if (currentTheme === "dark") {
+      document.body.classList.add("dark");
+      toggle.textContent = "☀️";
+    }
+
+    toggle.onclick = () => {
+      document.body.classList.toggle("dark");
+      const theme = document.body.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("alecassier-theme", theme);
+      toggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    };
   </script>
   <script src="https://alestore-official.github.io/AleCAPTCHA/control.js"></script>
 </body>
