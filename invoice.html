@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Invoice</title>
+  <title>POS Payment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <meta http-equiv="refresh" content="20; url=index.html">
   <style>
     body {
       transition: background 0.3s ease, color 0.3s ease;
@@ -37,19 +36,20 @@
   <div class="welcome" id="welcome">Welcome</div>
 
   <header class="header">
-    <h1>🧾 Invoice</h1>
+    <h1>🏦 AleBank</h1>
+    <button class="btn-admin" onclick="location.href='cart.html'">⬅️ Back to Cart</button>
   </header>
 
-  <main style="text-align: center; padding: 30px;">
-    <div class="product-card">
-      <h2>✅ Payment Completed</h2>
-      <p>Thank you for your purchase!</p>
-      <hr style="margin: 20px 0;">
-      <p><strong>Purchased Products:</strong></p>
-      <div id="invoiceSummary" style="margin-bottom: 20px;"></div>
-      <p><strong>Final Total:</strong> €<span id="invoiceTotal">0.00</span></p>
-      <p><em>You will be redirected to the homepage in 20 seconds...</em></p>
-    </div>
+  <main style="text-align: center; padding: 40px;">
+    <h2>💶 Total to Pay</h2>
+    <p id="totalDisplay" class="totale">€0.00</p>
+
+    <h2 style="margin-top: 30px;">💳 Amount Paid by Customer</h2>
+    <input type="number" class="input" id="customerAmount" placeholder="e.g. 10.00" oninput="calculateChange()">
+
+    <p id="message" class="conferma-msg" style="margin-top: 20px;">Enter the amount to calculate the change.</p>
+
+    <button class="btn-next" style="margin-top: 30px;" onclick="confirmPayment()">✅ Confirm Change</button>
   </main>
 
   <div class="signature">
@@ -83,24 +83,35 @@
     }
   </script>
   <script>
-    const container = document.getElementById("invoiceSummary");
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let total = parseFloat(localStorage.getItem("finalTotal")) || 0;
+    document.getElementById("totalDisplay").textContent = `€${total.toFixed(2)}`;
 
-    cart.forEach(item => {
-      const line = document.createElement("p");
-      line.textContent = `${item.name} × ${item.quantity} = €${(item.price * item.quantity).toFixed(2)}`;
-      container.appendChild(line);
-    });
+    function calculateChange() {
+      const paid = parseFloat(document.getElementById("customerAmount").value);
+      const message = document.getElementById("message");
 
-    document.getElementById("invoiceTotal").textContent =
-      localStorage.getItem("finalTotal") || "0.00";
+      if (isNaN(paid)) {
+        message.textContent = "❌ Please enter a valid amount.";
+        return;
+      }
 
-    setTimeout(() => {
-      window.location.href = "index.html";
-    }, 20000);
+      const difference = paid - total;
+
+      if (difference < 0) {
+        message.textContent = `⚠️ Still missing €${Math.abs(difference).toFixed(2)}.`;
+      } else if (difference === 0) {
+        message.textContent = `✅ Exact payment. No change needed.`;
+      } else {
+        message.textContent = `💰 Change to give: €${difference.toFixed(2)}.`;
+      }
+    }
+
+    function confirmPayment() {
+      window.location.href = "invoice.html";
+    }
 
     const toggle = document.getElementById("themeToggle");
-    const currentTheme = localStorage.getItem("aleinvoice-theme");
+    const currentTheme = localStorage.getItem("alepayment-theme");
     if (currentTheme === "dark") {
       document.body.classList.add("dark");
       toggle.textContent = "☀️";
@@ -109,7 +120,7 @@
     toggle.onclick = () => {
       document.body.classList.toggle("dark");
       const theme = document.body.classList.contains("dark") ? "dark" : "light";
-      localStorage.setItem("aleinvoice-theme", theme);
+      localStorage.setItem("alepayment-theme", theme);
       toggle.textContent = theme === "dark" ? "☀️" : "🌙";
     };
   </script>
