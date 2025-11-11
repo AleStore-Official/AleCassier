@@ -83,60 +83,31 @@ function showCart() {
   document.getElementById("totale").textContent = `Total: €${calculateTotal().toFixed(2)}`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (location.pathname.includes("cart.html")) {
-    loadCart();
-  }
-});
-
-// 📦 Product list
 const products = {
   "Sandwich": 3.50,
-  "Croissant": 1.50,
+  "Brioche": 1.50,
   "Lasagna": 4.50,
   "Chocolate Muffin": 2.00,
   "Waffle": 2.50,
   "Heart-shaped Waffle": 2.80,
-  "Slice of Pizza": 2.50,
+  "Pizza Slice": 2.50,
   "Apricot Tart": 2.20,
   "Chocolate Tart": 2.50,
   "Donut": 1.80,
   "Bread": 1.50,
   "Burger Bun": 1.20,
-  "Toast": 1.00,
-  "Toast with Honey": 1.50,
+  "Rusks": 1.00,
+  "Honey Rusk": 1.50,
   "Crackers": 0.80,
   "French Fries": 2.00,
-  "Sausage": 1.50,
-  "Apple": 1.00,
-  "Red Apple": 1.00,
-  "Pear": 1.20,
-  "Banana": 0.90,
-  "Strawberry": 1.50,
-  "Purple Grapes": 2.00,
-  "Green Grapes": 2.00,
-  "Mandarin": 0.80,
-  "Lemon": 0.60,
-  "Orange": 1.00,
-  "Blood Orange": 1.20,
-  "Small Tomato": 0.70,
-  "Large Cucumber": 1.00,
-  "Small Cucumber": 0.80,
-  "Green Pepper": 1.20,
-  "Red Pepper": 1.30,
-  "Yellow Pepper": 1.30,
-  "Carrot": 0.60,
-  "Potato": 0.50,
-  "Corn Cob": 1.50,
-  "Lettuce": 1.00,
-  "Eggplant": 1.20,
-  "Fennel": 1.00,
-  "Pepper Slice": 0.40,
-  "Cauliflower": 1.80,
-  "Asparagus": 2.00,
-  "Peas": 1.50,
-  "Ice Cream Cone": 2.50,
-  "Cone Ice Cream": 2.00,
+  "Wurstel": 1.50,
+  "Apple": 0.90,
+  "Banana": 1.00,
+  "Carrot": 0.70,
+  "Tomato": 0.80,
+  "Lettuce": 1.20,
+  "Ice Cream with Cone": 2.50,
+  "Ice Cream Cone": 2.00,
   "Raw Eggs": 1.00,
   "Boiled Eggs": 1.20,
   "Shrimp": 3.50,
@@ -144,3 +115,28 @@ const products = {
   "Whole Watermelon": 4.00,
   "Onion": 0.70
 };
+
+function generateProductCards() {
+  const container = document.querySelector(".product-grid");
+  if (!container) return;
+
+  Object.entries(products).forEach(([name, price]) => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <h3>${name}</h3>
+      <p>€${price.toFixed(2)}</p>
+      <button class="btn-add" onclick="addProduct('${name}', ${price})">Add</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (location.pathname.includes("cassier.html")) {
+    generateProductCards();
+  }
+  if (location.pathname.includes("cart.html")) {
+    loadCart();
+  }
+});
