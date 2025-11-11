@@ -2,54 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>POS Payment</title>
+  <title>Invoice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    body.dark {
-      background: #121212;
-      color: #f0f0f0;
-    }
-    #themeToggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-size: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    .welcome {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 14px;
-      color: #444;
-    }
-  </style>
+  <meta http-equiv="refresh" content="20; url=index.html">
 </head>
 <body>
   <button id="themeToggle" title="Toggle theme">🌙</button>
   <div class="welcome" id="welcome">Welcome</div>
 
   <header class="header">
-    <h1>🏦 AleBank</h1>
-    <button class="btn-admin" onclick="location.href='cart.html'">⬅️ Back to Cart</button>
+    <h1>🧾 Invoice</h1>
   </header>
 
-  <main style="text-align: center; padding: 40px;">
-    <h2>💶 Total to Pay</h2>
-    <p id="totalDisplay" class="totale">€0.00</p>
-
-    <h2 style="margin-top: 30px;">💳 Amount Paid by Customer</h2>
-    <input type="number" class="input" id="customerAmount" placeholder="e.g. 10.00" oninput="calculateChange()">
-
-    <p id="message" class="conferma-msg" style="margin-top: 20px;">Enter the amount to calculate the change.</p>
-
-    <button class="btn-next" style="margin-top: 30px;" onclick="confirmPayment()">✅ Confirm Change</button>
+  <main style="text-align: center; padding: 30px;">
+    <div class="product-card">
+      <h2>✅ Payment Completed</h2>
+      <p>Thank you for your purchase!</p>
+      <hr style="margin: 20px 0;">
+      <p><strong>Purchased Products:</strong></p>
+      <div id="invoiceSummary" style="margin-bottom: 20px;"></div>
+      <p><strong>Final Total:</strong> €<span id="invoiceTotal">0.00</span></p>
+      <p><em>You will be redirected to the homepage in 20 seconds...</em></p>
+    </div>
   </main>
 
   <div class="signature">
@@ -65,11 +40,10 @@
 
     const supabase = createClient(
       'https://hsyyrcbibohwvbuwxwok.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzeXlyY2JpYm9od3ZidXd4d29rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNjE0MDcsImV4cCI6MjA3NjYzNzQwN30.2KsFsGYjwf_cA7Z9oglVthiaE1_jWYuQ6HMMm5UXsyo'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
     );
 
     const welcome = document.getElementById("welcome");
-
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       location.href = "https://alestore-official.github.io/AleLogin";
@@ -83,35 +57,24 @@
     }
   </script>
   <script>
-    let total = parseFloat(localStorage.getItem("finalTotal")) || 0;
-    document.getElementById("totalDisplay").textContent = `€${total.toFixed(2)}`;
+    const container = document.getElementById("invoiceSummary");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    function calculateChange() {
-      const paid = parseFloat(document.getElementById("customerAmount").value);
-      const message = document.getElementById("message");
+    cart.forEach(item => {
+      const line = document.createElement("p");
+      line.textContent = `${item.name} × ${item.quantity} = €${(item.price * item.quantity).toFixed(2)}`;
+      container.appendChild(line);
+    });
 
-      if (isNaN(paid)) {
-        message.textContent = "❌ Please enter a valid amount.";
-        return;
-      }
+    document.getElementById("invoiceTotal").textContent =
+      localStorage.getItem("finalTotal") || "0.00";
 
-      const difference = paid - total;
-
-      if (difference < 0) {
-        message.textContent = `⚠️ Still missing €${Math.abs(difference).toFixed(2)}.`;
-      } else if (difference === 0) {
-        message.textContent = `✅ Exact payment. No change needed.`;
-      } else {
-        message.textContent = `💰 Change to give: €${difference.toFixed(2)}.`;
-      }
-    }
-
-    function confirmPayment() {
-      window.location.href = "invoice.html";
-    }
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 20000);
 
     const toggle = document.getElementById("themeToggle");
-    const currentTheme = localStorage.getItem("alepayment-theme");
+    const currentTheme = localStorage.getItem("alestore-theme");
     if (currentTheme === "dark") {
       document.body.classList.add("dark");
       toggle.textContent = "☀️";
@@ -120,7 +83,7 @@
     toggle.onclick = () => {
       document.body.classList.toggle("dark");
       const theme = document.body.classList.contains("dark") ? "dark" : "light";
-      localStorage.setItem("alepayment-theme", theme);
+      localStorage.setItem("alestore-theme", theme);
       toggle.textContent = theme === "dark" ? "☀️" : "🌙";
     };
   </script>
