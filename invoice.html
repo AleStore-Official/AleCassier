@@ -48,6 +48,10 @@
     document.getElementById("invoiceTotal").textContent =
       localStorage.getItem("finalTotal") || "0.00";
 
+    // ✅ Rimuovi carrello e totale dopo averli mostrati
+    localStorage.removeItem("cart");
+    localStorage.removeItem("finalTotal");
+
     setTimeout(() => {
       window.location.href = "index.html";
     }, 20000);
