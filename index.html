@@ -18,7 +18,6 @@
 </head>
 <body>
   <button id="themeToggle" title="Toggle theme">🌙</button>
-  <div class="welcome" id="welcome">Welcome</div>
 
   <header class="header">
     <h1>🧾 Cash Register</h1>
@@ -46,7 +45,7 @@
       <div class="product-card"><h3>Crackers</h3><p>€0.80</p><button class="btn-add" onclick="addProduct('Crackers', 0.80)">Add</button></div>
       <div class="product-card"><h3>French Fries</h3><p>€2.00</p><button class="btn-add" onclick="addProduct('French Fries', 2.00)">Add</button></div>
       <div class="product-card"><h3>Wurstel</h3><p>€1.50</p><button class="btn-add" onclick="addProduct('Wurstel', 1.50)">Add</button></div>
-
+      
       <h2>🍓 Fruits & Vegetables</h2>
       <div class="product-card"><h3>Apple</h3><p>€0.90</p><button class="btn-add" onclick="addProduct('Apple', 0.90)">Add</button></div>
       <div class="product-card"><h3>Banana</h3><p>€1.00</p><button class="btn-add" onclick="addProduct('Banana', 1.00)">Add</button></div>
@@ -82,27 +81,7 @@
   <script src="script.js"></script>
   <script type="module">
     import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
-
     blockIfUnauthorized();
-
-    const supabase = createClient(
-      'https://hsyyrcbibohwvbuwxwok.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-    );
-
-    const welcome = document.getElementById("welcome");
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      location.href = "https://alestore-official.github.io/AleLogin";
-    } else {
-      const { data: profile } = await supabase
-        .from("utenti")
-        .select("firstName,lastName")
-        .eq("email", user.email)
-        .single();
-      welcome.textContent = `Welcome ${profile?.firstName || ''} ${profile?.lastName || ''}`;
-    }
   </script>
   <script>
     const toggle = document.getElementById("themeToggle");
