@@ -1,52 +1,97 @@
-/* Font base */
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #FCE38A, #F38181);
-  color: #333;
-  overflow-x: hidden;
-  animation: fadeInBody 1s ease-in-out;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(270deg, #fbc2eb, #a6c1ee, #d4fc79);
+  background-size: 600% 600%;
+  animation: gradientFlow 60s ease infinite, fadeInBody 1s ease-in-out;
+  color: #222;
+  transition: background 0.4s, color 0.4s;
 }
 
-/* Header multicolore */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body.dark {
+  background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+  color: #eee;
+}
+
+#themeToggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.9);
+  color: #000;
+  border: none;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark #themeToggle {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+
 .header {
-  background: linear-gradient(90deg, #EAFFD0, #BBDEFB);
-  color: #444;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  color: #222;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   animation: slideDown 0.8s ease forwards;
 }
 
-/* Pulsante Admin */
+body.dark .header {
+  background: rgba(20,20,20,0.8);
+  color: #eee;
+}
+
 .btn-admin {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
-  border: none;
-  color: white;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(8px);
+  color: #222;
   padding: 10px 20px;
   border-radius: 30px;
   cursor: pointer;
   font-size: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .btn-admin:hover {
+  background: rgba(255,255,255,0.25);
   transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(79, 172, 254, 0.6);
 }
 
-/* Layout principale */
+body.dark .btn-admin {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  color: #eee;
+}
+
 .main-layout {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  max-width: 900px;
+  margin: 2em auto;
+  padding: 1em;
 }
 
-/* Griglia prodotti */
 .product-grid {
-  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 24px;
@@ -54,7 +99,6 @@ body {
   padding-bottom: 160px;
 }
 
-/* Titoli di categoria */
 .product-grid h2 {
   grid-column: 1 / -1;
   font-size: 22px;
@@ -68,14 +112,8 @@ body {
   animation: fadeInUp 0.6s ease-in-out;
 }
 
-/* Spaziatura tra sezioni */
-.product-grid h2:not(:first-child) {
-  margin-top: 40px;
-}
-
-/* Singolo prodotto */
 .product-card {
-  background: white;
+  background: rgba(255,255,255,0.85);
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -87,6 +125,10 @@ body {
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+body.dark .product-card {
+  background: rgba(20,20,20,0.9);
 }
 
 .product-card h3 {
@@ -108,27 +150,29 @@ body {
   margin-bottom: 10px;
 }
 
-/* Bottone aggiungi */
-.btn-add {
-  background: linear-gradient(to right, #43e97b, #38f9d7);
-  border: none;
-  color: white;
-  padding: 10px;
-  border-radius: 20px;
+.btn-add, .btn-next {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(8px);
+  color: #222;
+  padding: 10px 20px;
+  border-radius: 25px;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 10px;
-  font-size: 14px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.btn-add:hover {
-  background: linear-gradient(to right, #38f9d7, #43e97b);
+.btn-add:hover, .btn-next:hover {
+  background: rgba(255,255,255,0.25);
   transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(67, 233, 123, 0.5);
 }
 
-/* Footer fisso */
+body.dark .btn-add, body.dark .btn-next {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  color: #eee;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -138,14 +182,17 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: linear-gradient(to right, #FFDEE9, #B5FFFC);
-  border-top: 2px solid #ddd;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255,255,255,0.25);
   box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-  z-index: 1000;
   animation: slideUp 0.8s ease forwards;
 }
 
-/* Sezione borse */
+body.dark .footer {
+  background: rgba(20,20,20,0.8);
+}
+
 .borse-container input {
   width: 60px;
   padding: 5px;
@@ -154,7 +201,6 @@ body {
   text-align: center;
 }
 
-/* Totale */
 .totale {
   font-size: 18px;
   font-weight: bold;
@@ -162,41 +208,6 @@ body {
   animation: pulse 2s infinite;
 }
 
-/* Pulsante Avanti */
-.btn-next {
-  background: linear-gradient(to right, #FBD786, #f7797d);
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-next:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(251, 215, 134, 0.5);
-}
-
-/* Campi di input generali */
-.input {
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: 1px solid #bbb;
-  width: 100%;
-  max-width: 300px;
-  margin: 10px 0;
-  font-size: 16px;
-  transition: border 0.3s ease;
-}
-
-.input:focus {
-  border-color: #4facfe;
-  outline: none;
-}
-
-/* Animazioni */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -223,7 +234,6 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Responsive fix per titoli e pulsanti */
 @media (max-width: 600px) {
   .main-layout {
     flex-direction: column;
