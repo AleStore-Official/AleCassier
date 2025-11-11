@@ -9,13 +9,12 @@
 </head>
 <body>
   <button id="themeToggle" title="Toggle theme">🌙</button>
-  <div class="welcome" id="welcome">Welcome</div>
 
   <header class="header">
     <h1>🧾 Invoice</h1>
   </header>
 
-  <main style="text-align: center; padding: 30px;">
+  <main class="main-layout" style="text-align: center; padding: 30px;">
     <div class="product-card">
       <h2>✅ Payment Completed</h2>
       <p>Thank you for your purchase!</p>
@@ -27,34 +26,14 @@
     </div>
   </main>
 
-  <div class="signature">
+  <footer class="signature">
     <p style="text-align: center; margin-top: 40px;">Created by <strong>AleStore-Official</strong></p>
-  </div>
+  </footer>
 
   <script src="script.js"></script>
   <script type="module">
     import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
-
     blockIfUnauthorized();
-
-    const supabase = createClient(
-      'https://hsyyrcbibohwvbuwxwok.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-    );
-
-    const welcome = document.getElementById("welcome");
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      location.href = "https://alestore-official.github.io/AleLogin";
-    } else {
-      const { data: profile } = await supabase
-        .from("utenti")
-        .select("firstName,lastName")
-        .eq("email", user.email)
-        .single();
-      welcome.textContent = `Welcome ${profile?.firstName || ''} ${profile?.lastName || ''}`;
-    }
   </script>
   <script>
     const container = document.getElementById("invoiceSummary");
