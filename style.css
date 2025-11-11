@@ -187,6 +187,7 @@ body.dark .btn-add, body.dark .btn-next {
   border-top: 1px solid rgba(255,255,255,0.25);
   box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
   animation: slideUp 0.8s ease forwards;
+  z-index: 100;
 }
 
 body.dark .footer {
@@ -208,10 +209,24 @@ body.dark .footer {
   animation: pulse 2s infinite;
 }
 
+.signature {
+  text-align: center;
+  margin-top: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
+  display: inline-block;
+  padding: 6px 12px;
+}
+
 .signature p {
   color: #000;
   font-weight: bold;
   text-shadow: 0 0 6px rgba(255,255,255,0.8);
+}
+
+body.dark .signature {
+  background: rgba(0,0,0,0.4);
 }
 
 body.dark .signature p {
@@ -271,5 +286,14 @@ body.dark .signature p {
 
   .totale {
     font-size: 16px;
+  }
+
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer .btn-next {
+    margin-top: 10px;
   }
 }
