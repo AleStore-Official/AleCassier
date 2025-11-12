@@ -45,7 +45,7 @@
       <div class="product-card"><h3>Crackers</h3><p>€0.80</p><button class="btn-add" onclick="addProduct('Crackers', 0.80)">Add</button></div>
       <div class="product-card"><h3>French Fries</h3><p>€2.00</p><button class="btn-add" onclick="addProduct('French Fries', 2.00)">Add</button></div>
       <div class="product-card"><h3>Wurstel</h3><p>€1.50</p><button class="btn-add" onclick="addProduct('Wurstel', 1.50)">Add</button></div>
-      
+
       <h2>🍓 Fruits & Vegetables</h2>
       <div class="product-card"><h3>Apple</h3><p>€0.90</p><button class="btn-add" onclick="addProduct('Apple', 0.90)">Add</button></div>
       <div class="product-card"><h3>Banana</h3><p>€1.00</p><button class="btn-add" onclick="addProduct('Banana', 1.00)">Add</button></div>
@@ -81,8 +81,15 @@
   <script src="script.js"></script>
   <script type="module">
     import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
-    blockIfUnauthorized();
+
+    const verified = localStorage.getItem("access_verified") === "true";
+    const registered = localStorage.getItem("user_verified") === "true";
+
+    if (!verified || !registered) {
+      blockIfUnauthorized();
+    }
   </script>
+
   <script>
     const toggle = document.getElementById("themeToggle");
     const currentTheme = localStorage.getItem("alestore-theme");
@@ -98,6 +105,7 @@
       toggle.textContent = theme === "dark" ? "☀️" : "🌙";
     };
   </script>
+
   <script src="https://alestore-official.github.io/AleCAPTCHA/control.js"></script>
 </body>
 </html>
