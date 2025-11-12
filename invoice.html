@@ -30,7 +30,6 @@
     <p style="text-align: center; margin-top: 40px;">Created by <strong>AleStore-Official</strong></p>
   </footer>
 
-  <script src="script.js"></script>
   <script type="module">
     import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
     blockIfUnauthorized();
@@ -39,16 +38,19 @@
     const container = document.getElementById("invoiceSummary");
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    cart.forEach(item => {
-      const line = document.createElement("p");
-      line.textContent = `${item.name} × ${item.quantity} = €${(item.price * item.quantity).toFixed(2)}`;
-      container.appendChild(line);
-    });
+    if (cart.length > 0) {
+      cart.forEach(item => {
+        const line = document.createElement("p");
+        line.textContent = `${item.name} × ${item.quantity} = €${(item.price * item.quantity).toFixed(2)}`;
+        container.appendChild(line);
+      });
+    } else {
+      container.textContent = "No products found.";
+    }
 
-    document.getElementById("invoiceTotal").textContent =
-      localStorage.getItem("finalTotal") || "0.00";
+    const total = localStorage.getItem("finalTotal") || "0.00";
+    document.getElementById("invoiceTotal").textContent = total;
 
-    // ✅ Rimuovi carrello e totale dopo averli mostrati
     localStorage.removeItem("cart");
     localStorage.removeItem("finalTotal");
 
