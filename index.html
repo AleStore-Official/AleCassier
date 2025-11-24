@@ -73,23 +73,13 @@
     <div class="borse-container">
       🛍️ Bags: <input type="number" id="bags" min="0" value="0" oninput="updateBags()">
     </div>
+    </div>
     <div id="totale" class="totale">Total: €0.00</div>
     <button class="btn-next" onclick="location.href='cart.html'">➡️ Next</button>
     <p style="margin-top: 1em; text-align: center;">Created by <strong>AleStore-Official</strong></p>
   </footer>
 
   <script src="script.js"></script>
-  <script type="module">
-    import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
-
-    const verified = localStorage.getItem("access_verified") === "true";
-    const registered = localStorage.getItem("user_verified") === "true";
-
-    if (!verified || !registered) {
-      blockIfUnauthorized();
-    }
-  </script>
-
   <script>
     const toggle = document.getElementById("themeToggle");
     const currentTheme = localStorage.getItem("alestore-theme");
@@ -107,5 +97,9 @@
   </script>
 
   <script src="https://alestore-official.github.io/AleCAPTCHA/control.js"></script>
+  <script type="module">
+    import { blockIfUnauthorized } from "https://alestore-official.github.io/AleRegister/access.js";
+    blockIfUnauthorized();
+  </script>
 </body>
 </html>
