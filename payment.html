@@ -31,17 +31,6 @@
 
   <script src="script.js"></script>
 
-  <script type="module">
-    import { blockIfUnauthorized } from 'https://alestore-official.github.io/AleRegister/access.js';
-
-    const verified = localStorage.getItem("access_verified") === "true";
-    const registered = localStorage.getItem("user_verified") === "true";
-
-    if (!verified || !registered) {
-      blockIfUnauthorized();
-    }
-  </script>
-
   <script>
     let total = parseFloat(localStorage.getItem("finalTotal")) || 0;
     document.getElementById("totalDisplay").textContent = `€${total.toFixed(2)}`;
@@ -86,5 +75,9 @@
   </script>
 
   <script src="https://alestore-official.github.io/AleCAPTCHA/control.js"></script>
+  <script type="module">
+    import { blockIfUnauthorized } from "https://alestore-official.github.io/AleRegister/access.js";
+    blockIfUnauthorized();
+  </script>
 </body>
 </html>
